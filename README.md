@@ -1,10 +1,10 @@
-# 📚 Catalogue Management
+#  Catalogue Management
 
 A multi-tier Spring Boot application for managing a book catalogue. It allows book collectors to create, update, view, and delete books in their personal library.
 
 ---
 
-## 🚀 Project Overview
+##  Project Overview
 
 This solution is split into two Spring Boot services:
 
@@ -15,7 +15,7 @@ This repository contains the **Management Service** and Docker support.
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - Java 17
 - Spring Boot 3
@@ -26,19 +26,19 @@ This repository contains the **Management Service** and Docker support.
 
 ---
 
-## 📦 Features
+##  Features
 
-- 📖 List all books
-- ➕ Add new books
-- 📝 Update existing books
-- ❌ Delete books
-- 📄 Swagger UI for API exploration
+-  List all books
+-  Add new books
+-  Update existing books
+-  Delete books
+-  Swagger UI for API exploration
 
 ---
 
-## ⚙️ How to Run
+##  How to Run
 
-### 🐳 Docker (Recommended)
+###  Docker (Recommended)
 
 1. **Create the Docker network for both services:**
    ```bash
@@ -52,7 +52,7 @@ This repository contains the **Management Service** and Docker support.
    ```bash
    docker run -d --name cataloguemanagement --network catalogue-network -p 8080:8080 catalogue-management
 
-### 🧪 Running Locally (without Docker)
+### Running Locally (without Docker)
 
 1. **Build the project to produce the jar :**
    ```bash
