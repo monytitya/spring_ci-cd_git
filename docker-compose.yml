@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: cataloguemanagement
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -28,6 +28,15 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/cataloguemanagement
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  adminer:
+    image: adminer:latest
+    container_name: adminer
+    ports:
+      - "8085:8080"
     depends_on:
       postgres:
         condition: service_healthy

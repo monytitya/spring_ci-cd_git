@@ -3,7 +3,7 @@ spring:
     name: CatalogueManagement
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/cataloguemanagement
+    url: jdbc:postgresql://localhost:5433/cataloguemanagement
     driverClassName: org.postgresql.Driver
     username: postgres
     password: postgres
@@ -12,29 +12,21 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
-
-  graphql:
-    schema:
-      locations: classpath:graphql/
-    path: /graphql
-
 otel:
-  #exporter
+ 
   exporter:
     otlp:
       endpoint: http://localhost:4317
       protocol: grpc
 
-  #disable logs only export traces and metrics
+  
   logs:
     exporter: none
 
-  # Resource attributes (tags for the service)
   resource:
     attributes:
       service.name: CatalogueManagement
 
-  # Traces configuration
   traces:
     sampler: always_on
 
