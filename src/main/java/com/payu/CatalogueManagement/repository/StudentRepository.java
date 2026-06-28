@@ -1,9 +1,9 @@
 package com.payu.CatalogueManagement.repository;
 
-import com.payu.CatalogueManagement.entity.Book;
+import com.payu.CatalogueManagement.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BookRepository extends JpaRepository<Book, Long> {
+public interface StudentRepository extends JpaRepository<Student, Long> {
 }

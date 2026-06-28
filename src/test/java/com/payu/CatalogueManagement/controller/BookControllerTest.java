@@ -2,7 +2,6 @@ package com.payu.CatalogueManagement.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.payu.CatalogueManagement.entity.Book;
-import com.payu.CatalogueManagement.entity.BookType;
 import com.payu.CatalogueManagement.service.BookService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,7 +36,15 @@ class BookControllerTest {
 
     @BeforeEach
     void setup() {
-        sampleBook = new Book(1L, "Test Book", "ISBN123", LocalDate.of(2023, 1, 1), 199.99, BookType.HARDCOVER);
+        sampleBook = Book.builder()
+                .id(1L)
+                .title("Test Book")
+                .edition("1st Edition")
+                .author("Jane Doe")
+                .publisher("Test Publisher")
+                .copies(5)
+                .cost(199.99)
+                .build();
     }
 
     @Test
@@ -49,7 +55,7 @@ class BookControllerTest {
         mockMvc.perform(get("/api/books/getAllBooks"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(1))
-                .andExpect(jsonPath("$[0].name").value("Test Book"));
+                .andExpect(jsonPath("$[0].title").value("Test Book"));
     }
 
     @Test
@@ -60,8 +66,8 @@ class BookControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(sampleBook)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Test Book"))
-                .andExpect(jsonPath("$.isbnNumber").value("ISBN123"));
+                .andExpect(jsonPath("$.title").value("Test Book"))
+                .andExpect(jsonPath("$.author").value("Jane Doe"));
     }
 
     @Test
@@ -72,8 +78,8 @@ class BookControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(sampleBook)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Test Book"))
-                .andExpect(jsonPath("$.bookType").value("HARDCOVER"));
+                .andExpect(jsonPath("$.title").value("Test Book"))
+                .andExpect(jsonPath("$.publisher").value("Test Publisher"));
     }
 
     @Test
@@ -86,4 +92,3 @@ class BookControllerTest {
         Mockito.verify(service).delete(1L);
     }
 }
-

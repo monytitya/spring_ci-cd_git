@@ -1,13 +1,11 @@
 package com.payu.CatalogueManagement.service;
 
 import com.payu.CatalogueManagement.entity.Book;
-import com.payu.CatalogueManagement.entity.BookType;
 import com.payu.CatalogueManagement.repository.BookRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,8 +25,8 @@ class BookServiceTest {
 
     @Test
     void testFindAll_ShouldReturnListOfBooks() {
-        Book book1 = new Book(1L, "Book One", "123456", LocalDate.now(), 100.0, BookType.EBOOK);
-        Book book2 = new Book(2L, "Book Two", "654321", LocalDate.now(), 150.0, BookType.HARDCOVER);
+        Book book1 = Book.builder().id(1L).title("Book One").author("Author A").copies(3).cost(100.0).build();
+        Book book2 = Book.builder().id(2L).title("Book Two").author("Author B").copies(5).cost(150.0).build();
         when(repository.findAll()).thenReturn(Arrays.asList(book1, book2));
 
         List<Book> result = service.findAll();
@@ -39,8 +37,8 @@ class BookServiceTest {
 
     @Test
     void testSave_ShouldReturnSavedBook() {
-        Book book = new Book(null, "New Book", "112233", LocalDate.now(), 120.0, BookType.SOFTCOVER);
-        Book savedBook = new Book(1L, "New Book", "112233", LocalDate.now(), 120.0, BookType.SOFTCOVER);
+        Book book = Book.builder().title("New Book").author("New Author").copies(2).cost(120.0).build();
+        Book savedBook = Book.builder().id(1L).title("New Book").author("New Author").copies(2).cost(120.0).build();
         when(repository.save(book)).thenReturn(savedBook);
 
         Book result = service.save(book);
@@ -51,14 +49,13 @@ class BookServiceTest {
 
     @Test
     void testUpdate_ShouldUpdateAndReturnBook() {
-        Book bookToUpdate = new Book(5L, "Old Book", "998877", LocalDate.now(), 180.0, BookType.EBOOK);
-        Book updatedBook = new Book(5L, "Updated Book", "998877", LocalDate.now(), 185.0, BookType.EBOOK);
+        Book bookToUpdate = Book.builder().id(5L).title("Old Book").author("Old Author").cost(180.0).build();
+        Book updatedBook  = Book.builder().id(5L).title("Updated Book").author("Old Author").cost(185.0).build();
         when(repository.save(any(Book.class))).thenReturn(updatedBook);
 
         Book result = service.update(5L, bookToUpdate);
 
-//        assertThat(result.getId()).isEqualTo(5L);
-        assertThat(result.getName()).isEqualTo("Updated Book");
+        assertThat(result.getTitle()).isEqualTo("Updated Book");
         verify(repository).save(bookToUpdate);
     }
 
